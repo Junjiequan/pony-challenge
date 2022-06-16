@@ -1,0 +1,22 @@
+.MazeContainer {
+  margin-top: 1rem;
+  display: grid;
+  justify-content: center;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.west {
+  border-left: 1px solid gray;
+}
+.north {
+  border-top: 1px solid gray;
+}
+.east {
+  border-right: 1px solid gray;
+}
+.south {
+  border-bottom: 1px solid gray;
+}
