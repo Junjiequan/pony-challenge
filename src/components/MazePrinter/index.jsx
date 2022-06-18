@@ -1,18 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
+import MazeMap from './MazeMap';
 import './MazePrinter.css';
-
-const MazePath = (props) => {
-  const { className, location, pony, domokun, exit } = props;
-
-  return (
-    <div className={className + ` center ${location}`}>
-      {location === pony ? 'p' : location === domokun ? 'd' : location === exit ? 'e' : ''}
-    </div>
-  );
-};
 
 const MazePrinter = (props) => {
   const { mazeData } = props;
+  const [end, setEnd] = useState(false);
 
   const width = mazeData?.data['size'][0];
   const height = mazeData?.data['size'][1];
@@ -32,13 +24,14 @@ const MazePrinter = (props) => {
       {mazeData.data.data.map((d, index) => {
         const directions = d.map((d) => d).join(' ');
         return (
-          <MazePath
+          <MazeMap
             key={index}
             className={`${directions} block ${eastBorder(index + 1)} ${southBorder(index)}`}
             location={index}
             pony={pony[0]}
             domokun={domokun[0]}
             exit={exit[0]}
+            end={end}
           />
         );
       })}

@@ -1,22 +1,26 @@
 import * as api from '../../api';
 
 const ControlPanel = (props) => {
-  const { mazeParam, setMazeParam, setMazeData } = props;
+  const { mazeParam, setMazeParam, setMazeData, setMazeId } = props;
   const handleOnSubmit = async (e) => {
-    console.log('submmitee?');
     e.preventDefault();
     try {
       const resp = await api.createMazeId(mazeParam);
-      const data = await api.getMaze(resp.data.maze_id);
+      setMazeId(resp.data.maze_id);
+
+      const data = await api.getMazeCurrentState(resp.data.maze_id);
+
+      console.log(resp);
       setMazeData(data);
     } catch (err) {
       console.log(`Err:${err}`);
     }
   };
+
   const handleOnChange = (e) => {
     const type = e.target.name;
     const value = Number(e.target.value);
-    const isValidSize = value <= 25 && value >= 15;
+    const isValidSize = value <= 99;
     const isValidLevel = value <= 9 && value >= 1;
 
     if (type === 'width') isValidSize && setMazeParam({ ...mazeParam, 'maze-width': value });
@@ -40,8 +44,8 @@ const ControlPanel = (props) => {
         value={mazeParam['difficulty']}
         onChange={handleOnChange}
       />
-      &nbsp;
-      <button type='submit'>Start</button>
+      &nbsp; &nbsp;
+      <button type='submit'>start</button>
     </form>
   );
 };
