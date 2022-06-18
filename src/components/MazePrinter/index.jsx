@@ -20,12 +20,8 @@ const MazePrinter = (props) => {
   };
 
   if (!mazeData) return;
-  if (domokun[0] === pony[0]) {
-    setEnd('dead');
-  }
-  if (pony[0] === exit[0]) {
-    setEnd('escaped');
-  }
+  if (domokun[0] === pony[0]) setEnd('Domokun caught pony');
+  if (pony[0] === exit[0]) setEnd('Pony escaped');
   return (
     <div className='MazeContainer' style={gridStyle}>
       {mazeData?.data.data.map((d, index) => {

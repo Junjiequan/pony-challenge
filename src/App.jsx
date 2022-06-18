@@ -5,7 +5,9 @@ import MazePrinter from './components/MazePrinter';
 import * as api from './api';
 import './App.css';
 
-export const MazeContext = createContext();
+export const MazeContext = createContext({
+  end: false,
+});
 
 function App() {
   const [mazeId, setMazeId] = useState(null);
@@ -29,7 +31,7 @@ function App() {
     const id = data?.data.maze_id;
     try {
       const resp = await api.makeMove(id, move);
-      if (resp.status === 200) {
+      if (resp.status === 200 && !end) {
         const newData = await api.getMazeCurrentState(id);
         setMazeData(newData);
       }
@@ -63,7 +65,7 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
   return (
-    <MazeContext.Provider value={{ setEnd }}>
+    <MazeContext.Provider value={{ end, setEnd }}>
       <div className='App'>
         <ControlPanel
           mazeParam={mazeParam}
@@ -74,7 +76,12 @@ function App() {
         />
         <MazePrinter mazeData={mazeData} />
         {/* <Controller mazeId={mazeId} setDirection={setDirection} /> */}
-        {end && <div> {end} </div>}
+        <div> Press W A S D key to control pony</div>
+        {end && (
+          <div>
+            <b>{end}</b>
+          </div>
+        )}
       </div>
     </MazeContext.Provider>
   );
