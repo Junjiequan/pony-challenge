@@ -31,7 +31,7 @@ function App() {
     const id = data?.data.maze_id;
     try {
       const resp = await api.makeMove(id, move);
-      if (resp.status === 200 && !end) {
+      if (resp.status === 200) {
         const newData = await api.getMazeCurrentState(id);
         setMazeData(newData);
       }
