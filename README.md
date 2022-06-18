@@ -1,21 +1,21 @@
 # pony-challenge
 
-## live link
+Use W,A,S,D key to control pony movement
+
+## Live link
 
 `https://a331998513.github.io/pony-challenge/`
 
-## run application
+## Run application
+
+Clone the application and type the following commands to run locally
 
 ```
 npm install
 npm dev
 ```
 
-## deploy on gh-pages
+## Tools
 
-```
-npm run build
-git add dist -f
-git commit -m "..."
-git subtree push --prefix dist origin gh-pages
-```
+- Vite based React application
+- Axios is used to handle HTTP requests.
