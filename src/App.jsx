@@ -74,7 +74,7 @@ function App() {
         />
         <MazePrinter mazeData={mazeData} />
         {/* <Controller mazeId={mazeId} setDirection={setDirection} /> */}
-        {end && <div> success </div>}
+        {end && <div> {end} </div>}
       </div>
     </MazeContext.Provider>
   );

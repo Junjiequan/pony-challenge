@@ -21,10 +21,10 @@ const MazePrinter = (props) => {
 
   if (!mazeData) return;
   if (domokun[0] === pony[0]) {
-    setEnd(true);
+    setEnd('dead');
   }
   if (pony[0] === exit[0]) {
-    setEnd(true);
+    setEnd('escaped');
   }
   return (
     <div className='MazeContainer' style={gridStyle}>
