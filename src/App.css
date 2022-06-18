@@ -1,5 +1,30 @@
 .App {
   margin-top: 1rem;
   text-align: center;
+  position: relative;
 }
 
+.notification {
+  position: absolute;
+  background: rgb(50, 50, 50);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 10vmax;
+  max-height: 2rem;
+  pointer-events: none;
+  padding:.5rem 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.notification > b {
+  font-size: clamp(.7rem, 1.4vw, 1rem); 
+  color: rgb(255, 255, 255);
+}

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import ControlPanel from './components/ControlPanel';
 import MazePrinter from './components/MazePrinter';
-// import Controller from './components/MazePrinter/Controller';
 import * as api from './api';
 import './App.css';
 
@@ -75,10 +74,9 @@ function App() {
           setMazeId={setMazeId}
         />
         <MazePrinter mazeData={mazeData} />
-        {/* <Controller mazeId={mazeId} setDirection={setDirection} /> */}
         <div> Press W A S D key to control pony</div>
         {end && (
-          <div>
+          <div className='notification'>
             <b>{end}</b>
           </div>
         )}
