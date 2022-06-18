@@ -1,5 +1,3 @@
-import React from 'react';
-
 const MazeMap = (props) => {
   const { className, location, pony, domokun, exit } = props;
 

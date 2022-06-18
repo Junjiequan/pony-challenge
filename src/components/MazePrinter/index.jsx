@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import { MazeContext } from '../../App';
 import MazeMap from './MazeMap';
 import './MazePrinter.css';
 
 const MazePrinter = (props) => {
   const { mazeData } = props;
-  const [end, setEnd] = useState(false);
+  const { setEnd } = useContext(MazeContext);
 
   const width = mazeData?.data['size'][0];
   const height = mazeData?.data['size'][1];
@@ -19,9 +20,15 @@ const MazePrinter = (props) => {
   };
 
   if (!mazeData) return;
+  if (domokun[0] === pony[0]) {
+    setEnd(true);
+  }
+  if (pony[0] === exit[0]) {
+    setEnd(true);
+  }
   return (
     <div className='MazeContainer' style={gridStyle}>
-      {mazeData.data.data.map((d, index) => {
+      {mazeData?.data.data.map((d, index) => {
         const directions = d.map((d) => d).join(' ');
         return (
           <MazeMap
@@ -31,7 +38,6 @@ const MazePrinter = (props) => {
             pony={pony[0]}
             domokun={domokun[0]}
             exit={exit[0]}
-            end={end}
           />
         );
       })}
