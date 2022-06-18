@@ -12,7 +12,7 @@ Clone the application and type the following commands to run locally
 
 ```
 npm install
-npm dev
+npm run dev
 ```
 
 ## Tools
