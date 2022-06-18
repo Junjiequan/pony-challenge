@@ -6,15 +6,12 @@ const ControlPanel = (props) => {
     e.preventDefault();
     try {
       const resp = await api.createMazeId(mazeParam);
-      setMazeId(resp.data.maze_id);
 
       const data = await api.getMazeCurrentState(resp.data.maze_id);
 
-      console.log(resp);
       setMazeData(data);
-    } catch (err) {
-      console.log(`Err:${err}`);
-    }
+      setMazeId(resp.data.maze_id);
+    } catch (err) {}
   };
 
   const handleOnChange = (e) => {

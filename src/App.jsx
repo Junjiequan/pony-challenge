@@ -20,9 +20,9 @@ function App() {
   //   direction: '',
   // });
   const onUpdateMazeData = async (data, move) => {
-    console.log('--------------------data', data);
     const id = data?.data.maze_id;
     try {
+      if (!id) return;
       await api.makeMove(id, move);
       const newData = await api.getMazeCurrentState(id);
       setMazeData(newData);
@@ -31,8 +31,6 @@ function App() {
 
   const handleKeyPress = useCallback(
     (event) => {
-      console.log('mazeData', mazeData);
-      console.log('mazeId', mazeId);
       switch (event.key) {
         case 'w':
           // onMakeMove(mazeId, 'north');
@@ -50,8 +48,6 @@ function App() {
           // onMakeMove(mazeId, 'east');
           onUpdateMazeData(mazeData, 'east');
           break;
-        default:
-          console.log('mazeId', mazeData);
       }
     },
     [mazeId]
