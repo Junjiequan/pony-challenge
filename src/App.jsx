@@ -1,18 +1,26 @@
-import { useState, useEffect, useCallback, createContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ControlPanel from './components/ControlPanel';
 import MazePrinter from './components/MazePrinter';
 import * as api from './api';
 import './App.css';
 
-export const MazeContext = createContext({
-  end: false,
-});
-
 function App() {
+  const [end, setEnd] = useState(false);
+  const [auto, setAuto] = useState(false);
+  const [autoMovePath, setAutoMovePath] = useState([
+    'east',
+    'south',
+    'west',
+    'east',
+    'south',
+    'west',
+    'east',
+    'south',
+    'west',
+  ]);
   const [mazeId, setMazeId] = useState(null);
   const [mazeData, setMazeData] = useState(null);
-  const [end, setEnd] = useState(false);
-
+  const [maze, setMaze] = useState([]);
   const [mazeParam, setMazeParam] = useState({
     'maze-width': 15,
     'maze-height': 15,
@@ -59,29 +67,42 @@ function App() {
     [mazeId]
   );
 
+  //Auto
   useEffect(() => {
+    if (!auto || !maze) return;
+    for (const move in autoMovePath) {
+      setTimeout(() => onUpdateMazeData(mazeData, autoMovePath[move]), 1000 * move);
+    }
+  }, [auto]);
+
+  //Manual
+  useEffect(() => {
+    if (auto || !!end) return;
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [handleKeyPress]);
+  }, [handleKeyPress, end, auto]);
+
   return (
-    <MazeContext.Provider value={{ end, setEnd }}>
-      <div className='App'>
-        <ControlPanel
-          mazeParam={mazeParam}
-          setMazeParam={setMazeParam}
-          setMazeData={setMazeData}
-          mazeId={mazeId}
-          setMazeId={setMazeId}
-        />
-        <MazePrinter mazeData={mazeData} />
-        <div> Press W A S D key to control pony</div>
-        {end && (
-          <div className='notification'>
-            <b>{end}</b>
-          </div>
-        )}
-      </div>
-    </MazeContext.Provider>
+    <div className='App'>
+      <ControlPanel
+        setMazeData={setMazeData}
+        mazeParam={mazeParam}
+        setMazeParam={setMazeParam}
+        mazeId={mazeId}
+        setMazeId={setMazeId}
+        setEnd={setEnd}
+        auto={auto}
+        setAuto={setAuto}
+        setMaze={setMaze}
+      />
+      <MazePrinter mazeData={mazeData} setEnd={setEnd} setAutoMovePath={setAutoMovePath} maze={maze} />
+      <div> Press W A S D key to control pony</div>
+      {end && (
+        <div className='notification'>
+          <b>{end}</b>
+        </div>
+      )}
+    </div>
   );
 }
 

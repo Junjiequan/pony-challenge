@@ -1,39 +1,46 @@
-import { useContext } from 'react';
-import { MazeContext } from '../../App';
-import MazeMap from './MazeMap';
+import { useEffect } from 'react';
+import MazePath from './MazePath';
 import './MazePrinter.css';
 
 const MazePrinter = (props) => {
-  const { mazeData } = props;
-  const { setEnd } = useContext(MazeContext);
-
+  const { mazeData, setEnd, maze, setAutoMovePath } = props;
   const width = mazeData?.data['size'][0];
   const height = mazeData?.data['size'][1];
-  const pony = mazeData?.data['pony'];
-  const domokun = mazeData?.data['domokun'];
-  const exit = mazeData?.data['end-point'];
-  const eastBorder = (number) => (number % width ? '' : 'east');
-  const southBorder = (number) => (number >= (height - 1) * width ? 'south' : '');
+  const pony = mazeData?.data['pony'][0];
+  const domokun = mazeData?.data['domokun'][0];
+  const exit = mazeData?.data['end-point'][0];
+
+  const eastWall = (number) => (!((number + 1) % width) ? 'east' : '');
+  const southWall = (number) => (number >= (height - 1) * width ? 'south' : '');
+  const walls = maze.map((d, index) => {
+    const direction = [...d, eastWall(index), southWall(index)].map((d) => d).join(' ');
+    return direction;
+  });
+
   const gridStyle = {
     gridTemplateColumns: `repeat(${width}, 3vmin)`,
     gridTemplateRows: `repeat(${height}, 3vmin)`,
   };
 
+  const solveMaze = () => {};
+
   if (!mazeData) return;
-  if (domokun[0] === pony[0]) setEnd('Domokun caught pony');
-  if (pony[0] === exit[0]) setEnd('Pony escaped');
+  if (domokun === pony) setEnd('Domokun caught pony');
+  if (pony === exit) setEnd('Pony escaped');
+
   return (
     <div className='MazeContainer' style={gridStyle}>
-      {mazeData?.data.data.map((d, index) => {
-        const directions = d.map((d) => d).join(' ');
+      {walls.map((wall, index) => {
+        const mark = index === pony ? 'mark' : '';
+
         return (
-          <MazeMap
+          <MazePath
             key={index}
-            className={`${directions} block ${eastBorder(index + 1)} ${southBorder(index)}`}
+            className={`${wall} block ${mark} `}
             location={index}
-            pony={pony[0]}
-            domokun={domokun[0]}
-            exit={exit[0]}
+            pony={pony}
+            domokun={domokun}
+            exit={exit}
           />
         );
       })}

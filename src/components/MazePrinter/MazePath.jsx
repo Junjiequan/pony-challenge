@@ -1,8 +1,8 @@
-const MazeMap = (props) => {
+const MazePath = (props) => {
   const { className, location, pony, domokun, exit } = props;
 
   return (
-    <div className={className + ` center ${location} text-small`}>
+    <div className={className + `center ${location} text-small`}>
       {location === pony ? (
         <span className='pony'> P </span>
       ) : location === domokun ? (
@@ -16,4 +16,4 @@ const MazeMap = (props) => {
   );
 };
 
-export default MazeMap;
+export default MazePath;

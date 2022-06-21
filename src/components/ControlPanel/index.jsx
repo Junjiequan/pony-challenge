@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import { MazeContext } from '../../App';
 import * as api from '../../api';
 
 const ControlPanel = (props) => {
-  const { mazeParam, setMazeParam, setMazeData, setMazeId } = props;
-  const { setEnd } = useContext(MazeContext);
+  const { mazeParam, setMazeParam, setMazeData, setMazeId, setEnd, setAuto, auto, setMaze } = props;
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -13,6 +10,8 @@ const ControlPanel = (props) => {
       const data = await api.getMazeCurrentState(resp.data.maze_id);
       setMazeId(resp.data.maze_id);
       setMazeData(data);
+      setMaze(data.data.data);
+      setAuto(false);
       setEnd(false);
     } catch (err) {}
   };
@@ -46,6 +45,10 @@ const ControlPanel = (props) => {
       />
       &nbsp; &nbsp;
       <button type='submit'>start</button>
+      &nbsp;
+      <button type='button' onClick={() => setAuto((prev) => !prev)}>
+        {auto ? 'stop' : 'auto'}
+      </button>
     </form>
   );
 };
