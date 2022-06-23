@@ -1,19 +1,26 @@
 import * as api from '../../api';
 
 const ControlPanel = (props) => {
-  const { mazeParam, setMazeParam, setMazeData, setMazeId, setEnd, setAuto, auto, setMaze } = props;
+  const { mazeParam, setMazeParam, setMazeData, setMazeId, setEnd, setAuto, auto, setAutoMovePath, setMaze } = props;
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (auto) return;
       const resp = await api.createMazeId(mazeParam);
       const data = await api.getMazeCurrentState(resp.data.maze_id);
       setMazeId(resp.data.maze_id);
       setMazeData(data);
       setMaze(data.data.data);
       setAuto(false);
+      setAutoMovePath([]);
       setEnd(false);
     } catch (err) {}
+  };
+
+  const handleClick = () => {
+    if (auto) return console.log('no');
+    setAuto(true);
   };
 
   const handleOnChange = (e) => {
@@ -46,8 +53,8 @@ const ControlPanel = (props) => {
       &nbsp; &nbsp;
       <button type='submit'>start</button>
       &nbsp;
-      <button type='button' onClick={() => setAuto((prev) => !prev)}>
-        {auto ? 'stop' : 'auto'}
+      <button type='button' onClick={handleClick}>
+        auto
       </button>
     </form>
   );

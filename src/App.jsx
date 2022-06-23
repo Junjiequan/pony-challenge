@@ -7,17 +7,7 @@ import './App.css';
 function App() {
   const [end, setEnd] = useState(false);
   const [auto, setAuto] = useState(false);
-  const [autoMovePath, setAutoMovePath] = useState([
-    'east',
-    'south',
-    'west',
-    'east',
-    'south',
-    'west',
-    'east',
-    'south',
-    'west',
-  ]);
+  const [autoMovePath, setAutoMovePath] = useState([]);
   const [mazeId, setMazeId] = useState(null);
   const [mazeData, setMazeData] = useState(null);
   const [maze, setMaze] = useState([]);
@@ -27,7 +17,8 @@ function App() {
     'maze-player-name': 'Twilight Sparkle',
     difficulty: 0,
   });
-  const key = {
+
+  const KEY = {
     w: 'north',
     s: 'south',
     a: 'west',
@@ -51,28 +42,31 @@ function App() {
     (event) => {
       switch (event.key) {
         case 'w':
-          onUpdateMazeData(mazeData, key.w);
+          onUpdateMazeData(mazeData, KEY.w);
           break;
         case 's':
-          onUpdateMazeData(mazeData, key.s);
+          onUpdateMazeData(mazeData, KEY.s);
           break;
         case 'a':
-          onUpdateMazeData(mazeData, key.a);
+          onUpdateMazeData(mazeData, KEY.a);
           break;
         case 'd':
-          onUpdateMazeData(mazeData, key.d);
+          onUpdateMazeData(mazeData, KEY.d);
           break;
       }
     },
     [mazeId]
   );
 
-  //Auto
+  // Auto
   useEffect(() => {
     if (!auto || !maze) return;
-    for (const move in autoMovePath) {
-      setTimeout(() => onUpdateMazeData(mazeData, autoMovePath[move]), 1000 * move);
-    }
+    (async () => {
+      for (const move in autoMovePath) {
+        await new Promise((r) => setTimeout(r, 500));
+        onUpdateMazeData(mazeData, autoMovePath[move]);
+      }
+    })();
   }, [auto]);
 
   //Manual
@@ -94,14 +88,28 @@ function App() {
         auto={auto}
         setAuto={setAuto}
         setMaze={setMaze}
+        setAutoMovePath={setAutoMovePath}
       />
-      <MazePrinter mazeData={mazeData} setEnd={setEnd} setAutoMovePath={setAutoMovePath} maze={maze} />
+      <MazePrinter
+        mazeData={mazeData}
+        setEnd={setEnd}
+        setAutoMovePath={setAutoMovePath}
+        maze={maze}
+        setAuto={setAuto}
+        auto={auto}
+      />
       <div> Press W A S D key to control pony</div>
       {end && (
         <div className='notification'>
           <b>{end}</b>
         </div>
       )}
+      <img
+        width={200}
+        src={
+          'https://thumbs.dreamstime.com/z/compass-north-south-east-west-vector-compass-north-south-east-west-107153191.jpg'
+        }
+      />
     </div>
   );
 }
