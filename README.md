@@ -2,10 +2,6 @@
 
 Use W,A,S,D key to control pony movement
 
-## Live link
-
-`https://a331998513.github.io/pony-challenge/`
-
 ## Run application
 
 Clone the application and type the following commands to run locally
