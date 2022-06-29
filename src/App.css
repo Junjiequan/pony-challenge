@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.notification {
+/* .notification {
   position: absolute;
   background: rgb(50, 50, 50);
   box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
@@ -27,4 +27,4 @@
 .notification > b {
   font-size: clamp(.7rem, 1.4vw, 1rem); 
   color: rgb(255, 255, 255);
-}
+} */

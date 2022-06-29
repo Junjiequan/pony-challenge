@@ -1,10 +1,9 @@
 import axios from 'axios';
-
-const requestUrl = 'https://ponychallenge.trustpilot.com/pony-challenge/maze';
+import { REQUEST_URL } from '../Constants';
 // const config = {
 //   headers: { 'Content-Type': 'application/json' },
 // };
 
-export const createMazeId = (param) => axios.post(requestUrl, param);
-export const getMazeCurrentState = (id) => axios.get(`${requestUrl}/${id}`);
-export const makeMove = (id, move) => axios.post(`${requestUrl}/${id}`, { direction: move });
+export const createMazeId = (param) => axios.post(REQUEST_URL, param);
+export const getMazeCurrentState = (id) => axios.get(`${REQUEST_URL}/${id}`);
+export const makeMove = (id, move) => axios.post(`${REQUEST_URL}/${id}`, { direction: move });
